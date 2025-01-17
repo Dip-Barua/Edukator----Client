@@ -1,11 +1,12 @@
 import React from 'react';
 import logo from '../../../assets/Logo/header-logo.png'
+import { NavLink } from 'react-router-dom';
 
 const Navbar = () => {
 
     const navOptions = <>
-    <li><a>Home</a></li>
-    <li><a>All Classes</a></li>
+    <li><a> <NavLink to="/">Home</NavLink></a></li>
+    <li><a><NavLink to="/allclasses">All Classes </NavLink> </a></li>
      
       <li><a>Teach On Educator</a></li>
     </>
