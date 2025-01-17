@@ -7,6 +7,7 @@ const Main = () => {
     return (
         <div className='bg-[#F7F7F8]' >
             <Navbar></Navbar>
+            <div className='h-14'></div>
             <Outlet></Outlet>
             <Footer></Footer>
         </div>
