@@ -3,8 +3,8 @@ import crown from "../../assets/Icons/Abstract Line.png";
 
 const Banner = () => {
   return (
-    <div className="min-h-[36rem] flex flex-col items-center justify-center">
-      <div className="card bg-base-100 min-w-[45%] rounded-xl shadow-lg mx-auto my-12">
+    <div className="min-h-[40rem] flex flex-col items-center justify-center">
+      <div className="card bg-base-100 min-w-[45%] min-h-[8rem] rounded-xl shadow-lg mx-auto my-12">
       <img src={crown} alt="" className="w-[2rem] absolute -top-6 -left-6" />
         <div className="p-5 flex flex-row items-center justify-around">
           <div className="p-3 bg-orange-100  rounded-md mr-4">

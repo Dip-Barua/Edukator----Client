@@ -10,8 +10,8 @@ const Becomeinstructor = () => {
 
                 <div className="card bg-base-100 w-8/12 p-6 rounded-2xl shadow-lg mx-auto">
                     <div className="flex">
-                    <div className='w-6/12'>
-                    <img src={instructor} alt="" className='w-8/12' />
+                    <div className='w-6/12 flex justify-center'>
+                    <img src={instructor} alt="" className='w-8/12 ' />
                         </div>
                         <div className='w-6/12 flex flex-col justify-center items-center gap-8'>
                             <h3 className="text-4xl font-bold">Instructing is Fun, Not Boring!</h3>
