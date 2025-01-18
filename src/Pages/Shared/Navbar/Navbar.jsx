@@ -55,7 +55,7 @@ const Navbar = () => {
                   <img src={user.photoURL} className="rounded-full w-12 h-12" alt="User" />
                 </button>
                 <ul className="dropdown-content bg-base-100 text-black rounded-box z-[1] mt-16 w-52 p-2 shadow text-lg">
-                  <li><NavLink to="/profile">Profile</NavLink></li>
+                  <li><NavLink to="/myprofile">Profile</NavLink></li>
                   <li><NavLink to="/" onClick={handleLogout}>Logout</NavLink></li>
                 </ul>
                 
