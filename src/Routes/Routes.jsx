@@ -7,6 +7,10 @@ import TeachOnEducator from "../Pages/TeachOnEducator/TeachOnEducator";
 import SignIn from "../SignIn/SignIn";
 import SignUp from "../SignUp/SignUp";
 import MyProfile from "../Myprofile/MyProfile";
+import StudentDashboard from './../Student_Dashboard/StudentDashboard';
+import AdminDashboard from './../Admin_Dashboard/AdminDashboard';
+import TeacherRequest from "../Admin_Dashboard/TeacherRequest";
+import Users from "../Admin_Dashboard/Users";
 
 export const router = createBrowserRouter([
   {
@@ -33,10 +37,34 @@ export const router = createBrowserRouter([
       { path: "/signup",
          element: <SignUp /> 
         }, 
-      { path: "/myprofile",
-         element: <MyProfile /> 
-        }, 
+
 
     ],
-  },
+
+  },{
+  path: "student-dashboard",
+  element: <StudentDashboard></StudentDashboard>,
+  children:[
+    {
+      path: "profile",
+      element: <MyProfile/>,
+    },
+  ]}
+  ,{
+  path: "admin-dashboard",
+  element: <AdminDashboard></AdminDashboard>,
+  children:[
+    {
+      path: "profile",
+      element: <MyProfile/>,
+    },
+    {
+      path: "teacher-request",
+      element: <TeacherRequest/>,
+    },
+    {
+      path: "users",
+      element: <Users/>,
+    },
+  ]}
 ]);
