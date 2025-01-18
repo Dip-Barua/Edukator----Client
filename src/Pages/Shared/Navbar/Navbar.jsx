@@ -1,19 +1,50 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import logo from '../../../assets/Logo/header-logo.png';
 import { NavLink } from 'react-router-dom';
 import { authContext } from '../../../providers/AuthProvider';
+import axios from 'axios';
 
 const Navbar = () => {
   const { user, handleLogout } = useContext(authContext);
+  const [role, setRole] = useState("");
+
+  useEffect(() => {
+    if (user) {
+      axios
+        .get(`http://localhost:5000/api/users?email=${user.email}`)
+        .then((response) => {
+          const userData = response.data.user;
+          setRole(userData.role || "");
+        })
+        .catch((error) => {
+          console.error("Error fetching user data:", error);
+        });
+    }
+  }, [user]);
 
   const navOptions = (
     <>
-      <li><a> <NavLink to="/">Home</NavLink></a></li>
-    <li><a><NavLink to="/allclasses">All Classes </NavLink> </a></li>
-     
-      <li><a> <NavLink to="/teach">Teach On Educator</NavLink> </a></li>
+      <li><a><NavLink to="/">Home</NavLink></a></li>
+      <li><a><NavLink to="/allclasses">All Classes</NavLink></a></li>
+      <li><a><NavLink to="/teach">Teach On Educator</NavLink></a></li>
     </>
   );
+
+  const renderDashboardLink = () => {
+    if (role) {
+      switch (role) {
+        case 'student':
+          return <li><NavLink to="/student-dashboard">Student Dashboard</NavLink></li>;
+        case 'teacher':
+          return <li><NavLink to="/teacher-dashboard">Teacher Dashboard</NavLink></li>;
+        case 'admin':
+          return <li><NavLink to="/admin-dashboard">Admin Dashboard</NavLink></li>;
+        default:
+          return null;
+      }
+    }
+    return null;
+  };
 
   return (
     <div className="bg-orange-400 fixed top-0 left-0 right-0 z-50 mx-auto w-full text-white shadow-md">
@@ -38,13 +69,15 @@ const Navbar = () => {
               tabIndex={0}
               className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow text-lg">
               {navOptions}
+              {renderDashboardLink()}
             </ul>
           </div>
-          <a className="btn btn-ghost text-xl"><img src={logo} alt="" /></a>
+          <a className="btn btn-ghost text-xl"><img src={logo} alt="Logo" /></a>
         </div>
         <div className="navbar-center hidden lg:flex">
           <ul className="menu menu-horizontal px-1 text-lg">
             {navOptions}
+            {renderDashboardLink()}
           </ul>
         </div>
         <div className="navbar-end gap-3">
@@ -55,12 +88,10 @@ const Navbar = () => {
                   <img src={user.photoURL} className="rounded-full w-12 h-12" alt="User" />
                 </button>
                 <ul className="dropdown-content bg-base-100 text-black rounded-box z-[1] mt-16 w-52 p-2 shadow text-lg">
-                  <li><NavLink to="/myprofile">Profile</NavLink></li>
+                  <li><h2 className="text-center font-bold text-xl text-orange-500">{user.displayName}</h2></li>
+                  {renderDashboardLink()}
                   <li><NavLink to="/" onClick={handleLogout}>Logout</NavLink></li>
                 </ul>
-                
-                <NavLink to="/signin" onClick={handleLogout}s className="btn hover:text-white hover:bg-transparent">Logout</NavLink>
-
               </div>
             </>
           ) : (
