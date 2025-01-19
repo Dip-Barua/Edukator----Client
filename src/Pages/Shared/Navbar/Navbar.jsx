@@ -6,21 +6,26 @@ import axios from 'axios';
 
 const Navbar = () => {
   const { user, handleLogout } = useContext(authContext);
-  const [role, setRole] = useState("");
+  const [role, setRole] = useState("");  
 
   useEffect(() => {
     if (user) {
       axios
-        .get(`http://localhost:5000/api/users?email=${user.email}`)
+        .get(`http://localhost:5000/api/users?email=${user.email}`) 
         .then((response) => {
-          const userData = response.data.user;
-          setRole(userData.role || "");
+          if (response.data.success && response.data.user) {
+            setRole(response.data.user.role);
+            console.log("Role set:", response.data.user.role);  
+          } else {
+            setRole(""); 
+          }
         })
         .catch((error) => {
           console.error("Error fetching user data:", error);
+          setRole("");  
         });
     }
-  }, [user]);
+  }, [user]);  
 
   const navOptions = (
     <>
@@ -38,6 +43,7 @@ const Navbar = () => {
         case 'teacher':
           return <li><NavLink to="/teacher-dashboard">Teacher Dashboard</NavLink></li>;
         case 'admin':
+        case 'super-admin':
           return <li><NavLink to="/admin-dashboard">Admin Dashboard</NavLink></li>;
         default:
           return null;
@@ -71,6 +77,7 @@ const Navbar = () => {
               {navOptions}
               {renderDashboardLink()}
             </ul>
+            
           </div>
           <a className="btn btn-ghost text-xl"><img src={logo} alt="Logo" /></a>
         </div>
@@ -83,15 +90,18 @@ const Navbar = () => {
         <div className="navbar-end gap-3">
           {user ? (
             <>
-              <div className="dropdown flex">
+              <div className="dropdown flex ">
                 <button className="btn bg-transparent border-none hover:bg-transparent rounded-full">
                   <img src={user.photoURL} className="rounded-full w-12 h-12" alt="User" />
                 </button>
-                <ul className="dropdown-content bg-base-100 text-black rounded-box z-[1] mt-16 w-52 p-2 shadow text-lg">
-                  <li><h2 className="text-center font-bold text-xl text-orange-500">{user.displayName}</h2></li>
+                <ul className="dropdown-content bg-base-100 text-black rounded-box z-[1] gap-3 mt-16 w-52 p-2 shadow text-lg">
+                  
+                  <li><h2 className="text-center font-bold text-lg text-orange-500">{user.displayName}</h2></li>
                   {renderDashboardLink()}
                   <li><NavLink to="/" onClick={handleLogout}>Logout</NavLink></li>
                 </ul>
+                <NavLink to="/" onClick={handleLogout} className="btn item hover:text-white hover:bg-transparent">Logout</NavLink>
+
               </div>
             </>
           ) : (
