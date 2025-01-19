@@ -17,6 +17,7 @@ import TeacherDashboard from "../TeacherDashboard/TeacherDashboard";
 import AddClass from "../TeacherDashboard/AddClass";
 import MyClass from "../TeacherDashboard/MyClass";
 import SeeDetails from "../TeacherDashboard/SeeDetails";
+import ClassReview from "../Admin_Dashboard/ClassReview";
 
 export const router = createBrowserRouter([
   {
@@ -27,10 +28,9 @@ export const router = createBrowserRouter([
         path: "/",
         element: <Home></Home>,
       },
-      {
-        path: "/allclasses",
-        element: <AllClasses></AllClasses>,
-      },
+      { path: "/allclasses",
+         element: <AllClasses /> 
+        }, 
       { path: "/class/:id",
          element: <ClassDetails /> 
         }, 
@@ -78,6 +78,10 @@ export const router = createBrowserRouter([
     {
       path: "users",
       element: <Users/>,
+    },
+    {
+      path: "class-review",
+      element: <ClassReview></ClassReview>,
     },
   ]}
   ,{
