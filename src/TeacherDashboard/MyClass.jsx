@@ -166,8 +166,7 @@ const MyClass = () => {
                       variant="outlined"
                       onClick={() => handleDetails(classItem._id)}
                       style={{ marginRight: "8px" }}
-                      disabled={classItem.status === "pending"} 
-                    >
+                                          >
                       See Details
                     </Button>
                     <Button
@@ -175,6 +174,8 @@ const MyClass = () => {
                       color="primary"
                       onClick={() => handleUpdate(classItem)}
                       style={{ marginRight: "8px" }}
+                      disabled={classItem.status ===  "rejected"} 
+
                     >
                       Update
                     </Button>
