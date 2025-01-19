@@ -126,7 +126,7 @@ const SeeDetails = () => {
             variant="contained"
             color="primary"
             onClick={handleOpenModal}
-            disabled={classData.status !== 'approved'}
+            disabled={classData.status == 'rejected' }
           >
             Create Assignment
           </Button></div>
