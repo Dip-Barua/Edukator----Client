@@ -40,8 +40,8 @@ const AllClasses = () => {
         heading={"Explore Our All Classes"}
         subHeading={"Explore, Learn, and Grow with Our Curated Classes"}
       />
-      <div className="w-9/12 mx-auto mb-24">
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 p-4">
+      <div className=" mx-auto mb-24">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 sm:w-10/12 mx-auto lg:grid-cols-4 gap-8 p-4">
           {currentClasses.map((classItem, index) => (
             <div key={index} className="card bg-base-100 shadow-lg w-full p-6">
               <img
