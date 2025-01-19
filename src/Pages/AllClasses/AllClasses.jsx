@@ -6,7 +6,6 @@ const AllClasses = () => {
   const [classesData, setClassesData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const classesPerPage = 12;
-  const totalClasses = classesData.length;
 
   useEffect(() => {
     const fetchClasses = async () => {
@@ -25,13 +24,15 @@ const AllClasses = () => {
     fetchClasses();
   }, []);
 
+  const approvedClasses = classesData.filter(classItem => classItem.status === 'approved');
+
   const indexOfLastClass = currentPage * classesPerPage;
   const indexOfFirstClass = indexOfLastClass - classesPerPage;
-  const currentClasses = classesData.slice(indexOfFirstClass, indexOfLastClass);
+  const currentClasses = approvedClasses.slice(indexOfFirstClass, indexOfLastClass);
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
-  const totalPages = Math.ceil(totalClasses / classesPerPage);
+  const totalPages = Math.ceil(approvedClasses.length / classesPerPage);
 
   return (
     <div>
@@ -40,23 +41,23 @@ const AllClasses = () => {
         subHeading={"Explore, Learn, and Grow with Our Curated Classes"}
       />
       <div className="w-9/12 mx-auto mb-24">
-        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8 p-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 p-4">
           {currentClasses.map((classItem, index) => (
-            <div key={index} className="card bg-base-100 shadow-lg p-6">
+            <div key={index} className="card bg-base-100 shadow-lg w-full p-6">
               <img
-                src={classItem.image } 
+                src={classItem.image} 
                 alt={classItem.title}
                 className="w-full h-40 object-cover mb-4 rounded-lg"
               />
               <h3 className="text-xl font-semibold mb-2 min-h-10">{classItem.title}</h3>
               <p className="text-gray-500 mb-2">By {classItem.instructor}</p>
-              <p className="text-lg font-bold mb-2">{classItem.price}</p>
+              <p className="text-lg font-bold mb-2">{classItem.price}$</p>
               <p className="text-gray-700 mb-4 min-h-20">{classItem.shortDescription}</p>
               <div className="flex justify-between items-center">
                 <span className="text-gray-500">
                   Total Enrollments: {classItem.totalEnrollment}
                 </span>
-                <Link to={`/class/${classItem._id}`} className="btn bg-orange-400 text-white">
+                <Link to={`/class/${classItem._id}`} className="btn bg-orange-400 w-4/12 text-white">
                   Enroll
                 </Link>
               </div>
