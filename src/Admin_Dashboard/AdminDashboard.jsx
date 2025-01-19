@@ -24,7 +24,7 @@ const AdminDashboard = () => {
                         <Link to="/admin-dashboard/users" className="text-lg text-white font-bold">Users</Link>
                     </li>
                     <hr /><li>
-                        <Link to="/allclasses" className="text-lg text-white font-bold">All Classes</Link>
+                        <Link to="/admin-dashboard/class-review" className="text-lg text-white font-bold">All Classes</Link>
                     </li>
                     <li>
                         <Link to="/" className="text-lg text-white font-bold">Home</Link>
