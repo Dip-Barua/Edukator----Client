@@ -40,12 +40,15 @@ const ClassDetails = () => {
   }
 
   const handlePayNowClick = () => {
-    navigate(`/payment/${id}`);
+    navigate(`/payment/${id}`, {
+      state: { price: classItem.price, classId: id },
+    });
   };
+  
 
   return (
     <div className="w-6/12 mx-auto my-12 ">
-      <div className="card bg-base-100 shadow-xl p-6 flex flex-row">
+      <div className="card bg-base-100 shadow-xl p-6 gap-5 flex flex-row">
         <div className="w-5/12">
           <img
             src={classItem.image}
@@ -57,7 +60,7 @@ const ClassDetails = () => {
         <div>
           <h2 className="text-3xl font-bold mb-2">{classItem.title}</h2>
           <p className="text-gray-500 text-lg mb-4">By {classItem.instructor}</p>
-          <p className="text-xl font-bold text-green-600 mb-4">{classItem.price}</p>
+          <p className="text-xl font-bold text-green-600 mb-4">{classItem.price} $</p>
           <p className="text-gray-700 mb-4">{classItem.shortDescription}</p>
           <p className="text-gray-700 mb-4">
             <strong>Total Enrollments:</strong> {classItem.totalEnrollment}
