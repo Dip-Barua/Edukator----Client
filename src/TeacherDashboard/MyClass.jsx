@@ -152,6 +152,7 @@ const MyClass = () => {
           <Table aria-label="My Classes Table">
             <TableHead>
               <TableRow>
+                <TableCell>Image</TableCell>
                 <TableCell>Title</TableCell>
                 <TableCell>Instructor</TableCell>
                 <TableCell>Email</TableCell>
@@ -164,6 +165,7 @@ const MyClass = () => {
             <TableBody>
               {currentClasses.map((classItem) => (
                 <TableRow key={classItem._id}>
+                  <TableCell> <img src={classItem.image} className="w-32" alt="" /> </TableCell>
                   <TableCell>{classItem.title}</TableCell>
                   <TableCell>{classItem.instructor}</TableCell>
                   <TableCell>{classItem.email}</TableCell>
