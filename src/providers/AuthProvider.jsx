@@ -36,7 +36,7 @@ const AuthProvider = ({ children }) => {
           });
 
           axios
-            .get(`http://localhost:5000/api/users/${newUser.uid}`)
+            .get("http://localhost:5000/api/users/${newUser.uid}")
             .then((response) => {
               console.log("User already exists:", response.data);
             })
@@ -70,7 +70,7 @@ const AuthProvider = ({ children }) => {
         const user = result.user;
 
         axios
-          .get(`http://localhost:5000/api/users/${user.uid}`)
+          .get("http://localhost:5000/api/users/${user.uid}")
           .then((response) => {
             console.log("User already exists:", response.data);
           })
@@ -135,38 +135,36 @@ const AuthProvider = ({ children }) => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setLoading(true);
 
-      if (currentUser?.email) {
-        const user = { email: currentUser.email };
+if(currentUser?.email){
+  const user = { email: currentUser.email };
 
-        axios.post('https://study-together-server-one.vercel.app/jwt', user, {
-          withCredentials: true,
-        })
-        .then(res => {
-          console.log('JWT Token set:', res.data);
-          setUser(currentUser);
-          setLoading(false);
-        })
-        .catch(error => {
-          console.error('Error during JWT login:', error);
-          setLoading(false);
-        });
-
-      } else {
-        axios.post('https://study-together-server-one.vercel.app/logout', {}, {
-          withCredentials: true,
-        })
-        .then(res => {
-          console.log('Logged out:', res.data);
-          setUser(null);
-          setLoading(false);
-        })
-        .catch(error => {
-          console.error('Error during logout:', error);
-          setLoading(false);
-        });
-      }
-
-
+  axios.post('http://localhost:5000/jwt', user, {
+    withCredentials: true,
+  })
+  .then(res => {
+    console.log('JWT Token set:', res.data);
+    setUser(currentUser);
+    setLoading(false);
+  })
+  .catch(error => {
+    console.error('Error during JWT login:', error);
+    setLoading(false);
+  });
+}else{
+  axios.post('http://localhost:5000/logout', {}, {
+    withCredentials: true,
+  })
+  .then(res => {
+    console.log('Logged out:', res.data);
+    setUser(null);
+    setLoading(false);
+  })
+  .catch(error => {
+    console.error('Error during logout:', error);
+    setLoading(false);
+  });
+  
+}
 
 
       if (currentUser?.email) {
@@ -181,10 +179,6 @@ const AuthProvider = ({ children }) => {
         setUser(null);
         setLoading(false);
       }
-
-
-
-
     });
     return () => {
       unsubscribe();
