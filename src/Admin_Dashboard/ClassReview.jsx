@@ -2,11 +2,13 @@ import React, { useState, useEffect } from "react";
 import { Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Typography } from "@mui/material";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useNavigate } from "react-router-dom";
 
 const ClassReview = () => {
   const [classes, setClasses] = useState([]);
   const [currentPage, setCurrentPage] = useState(1); 
   const [classesPerPage] = useState(6); 
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchClasses = async () => {

@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 
 const AllClasses = () => {
   const [classesData, setClassesData] = useState([]);
+  const [enrollmentCounts, setEnrollmentCounts] = useState({});
   const [currentPage, setCurrentPage] = useState(1);
   const classesPerPage = 12;
 
@@ -16,6 +17,7 @@ const AllClasses = () => {
         }
         const data = await response.json();
         setClassesData(data);
+        fetchEnrollmentCounts(data);
       } catch (error) {
         console.error("Error fetching classes:", error);
       }
@@ -24,7 +26,27 @@ const AllClasses = () => {
     fetchClasses();
   }, []);
 
-  const approvedClasses = classesData.filter(classItem => classItem.status === 'approved');
+  const fetchEnrollmentCounts = async (classes) => {
+    const counts = {};
+    for (const classItem of classes) {
+      try {
+        const response = await fetch(
+          `http://localhost:5000/enrollments/count/${classItem._id}`
+        );
+        if (!response.ok) {
+          throw new Error("Failed to fetch enrollment count");
+        }
+        const data = await response.json();
+        counts[classItem._id] = data.count || 0; 
+      } catch (error) {
+        console.error("Error fetching enrollment count:", error);
+        counts[classItem._id] = 0;
+      }
+    }
+    setEnrollmentCounts(counts);
+  };
+
+  const approvedClasses = classesData.filter((classItem) => classItem.status === 'approved');
 
   const indexOfLastClass = currentPage * classesPerPage;
   const indexOfFirstClass = indexOfLastClass - classesPerPage;
@@ -40,12 +62,12 @@ const AllClasses = () => {
         heading={"Explore Our All Classes"}
         subHeading={"Explore, Learn, and Grow with Our Curated Classes"}
       />
-      <div className=" mx-auto mb-24">
+      <div className="mx-auto mb-24">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 sm:w-10/12 mx-auto lg:grid-cols-4 gap-8 p-4">
           {currentClasses.map((classItem, index) => (
             <div key={index} className="card bg-base-100 shadow-lg w-full p-6">
               <img
-                src={classItem.image} 
+                src={classItem.image}
                 alt={classItem.title}
                 className="w-full h-40 object-cover mb-4 rounded-lg"
               />
@@ -55,7 +77,7 @@ const AllClasses = () => {
               <p className="text-gray-700 mb-4 min-h-20">{classItem.shortDescription}</p>
               <div className="flex justify-between items-center">
                 <span className="text-gray-500">
-                  Total Enrollments: {classItem.totalEnrollment}
+                  Total Enrollments: {enrollmentCounts[classItem._id] || 0}
                 </span>
                 <Link to={`/class/${classItem._id}`} className="btn bg-orange-400 w-4/12 text-white">
                   Enroll
