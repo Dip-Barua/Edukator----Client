@@ -1,23 +1,25 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import { useLocation } from "react-router-dom";
 
 const stripePromise = loadStripe(import.meta.env.VITE_pk);
-import CheckOutForm from './ChechOutForm/CheckOutForm';
+import CheckOutForm from "../Payment/ChechOutForm/CheckOutForm";
+import { authContext } from "../providers/AuthProvider";
 
 const Payment = () => {
   const { price, classId } = useLocation().state || {}; 
   const [clientSecret, setClientSecret] = useState(null);
+  const { user } = useContext(authContext); 
 
   useEffect(() => {
-    if (price) {
+    if (price && user?.email) { 
       fetch("http://localhost:5000/create-payment-intent", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ amount: price }),
+        body: JSON.stringify({ amount: price, userId: user.email, classId }),
       })
         .then((res) => res.json())
         .then((data) => {
@@ -25,13 +27,13 @@ const Payment = () => {
         })
         .catch((error) => console.error("Error:", error));
     }
-  }, [price]);
+  }, [price, user, classId]);
 
   return (
     <div className="my-32">
       {clientSecret ? (
         <Elements stripe={stripePromise} options={{ clientSecret }}>
-          <CheckOutForm clientSecret={clientSecret} classId={classId} />
+          <CheckOutForm clientSecret={clientSecret} classId={classId} userId={user.email} />
         </Elements>
       ) : (
         <p>Loading...</p>
