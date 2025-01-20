@@ -1,8 +1,40 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Headlines from "../Shared/Headlines/Headlines";
 import growth from "../../assets/Gif/Growth.gif";
 
 const Growth = () => {
+  const [userCount, setUserCount] = useState(0);
+  const [classCount, setClassCount] = useState(0);
+  const [enrollmentCount, setEnrollmentCount] = useState(0);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchCounts = async () => {
+      try {
+        const userResponse = await fetch("http://localhost:5000/api/users");
+        const userData = await userResponse.json();
+        setUserCount(userData.users.length);
+
+        const classResponse = await fetch("http://localhost:5000/classes/");
+        const classData = await classResponse.json();
+        setClassCount(classData.length);
+
+        const enrollmentResponse = await fetch("http://localhost:5000/enrollments");
+        const enrollmentData = await enrollmentResponse.json();
+        setEnrollmentCount(enrollmentData.count);
+      } catch (error) {
+        console.error("Error fetching counts:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCounts();
+  }, []);
+
+  if (loading) {
+    return <p className="text-center text-gray-500 text-xl mt-2">Loading growth data...</p>;
+  }
   return (
     <>
       <div>
@@ -22,7 +54,7 @@ const Growth = () => {
 </svg>
 
               <h2 className="text-3xl font-semibold w-6/12">Total Users : </h2>
-              <h2 className="text-3xl font-bold text-orange-400">500+ </h2>
+              <h2 className="text-3xl font-bold text-orange-400">{userCount}+ </h2>
               </div>
               <div className="card bg-base-100 w-11/12 p-6 rounded-2xl shadow-md mx-auto items-center flex flex-row gap-5">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor" class="size-9">
@@ -30,7 +62,7 @@ const Growth = () => {
 </svg>
 
               <h2 className="text-3xl font-semibold w-6/12">Total Classes : </h2>
-              <h2 className="text-3xl font-bold text-orange-400">500+ </h2>
+              <h2 className="text-3xl font-bold text-orange-400">{classCount}+ </h2>
               </div>
               <div className="card bg-base-100 w-11/12 p-6 rounded-2xl shadow-md mx-auto items-center flex flex-row gap-5">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor" class="size-9">
@@ -38,7 +70,7 @@ const Growth = () => {
 </svg>
 
               <h2 className="text-3xl font-semibold w-6/12">Total Enrollment : </h2>
-              <h2 className="text-3xl font-bold text-orange-400">500+ </h2>
+              <h2 className="text-3xl font-bold text-orange-400">{enrollmentCount}+ </h2>
               </div>
             </div>
 
