@@ -79,7 +79,7 @@ const Navbar = () => {
             </ul>
             
           </div>
-          <a className="btn btn-ghost text-xl"><img src={logo} alt="Logo" /></a>
+          <a className="btn btn-ghost text-xl"><img src={logo} className='w-9/12 sm:w-full' alt="Logo" /></a>
         </div>
         <div className="navbar-center hidden lg:flex">
           <ul className="menu menu-horizontal px-1 text-lg">
@@ -107,7 +107,7 @@ const Navbar = () => {
           ) : (
             <>
               <NavLink to="/signup" className="btn text-white hover:text-black bg-transparent">Sign Up</NavLink>
-              <NavLink to="/signin" className="btn hover:text-white hover:bg-transparent">Login</NavLink>
+              <NavLink to="/signin" className="btn hidden sm:flex text-white hover:text-black bg-transparent">Login</NavLink>
             </>
           )}
         </div>

@@ -72,7 +72,7 @@ const PopularClasses = () => {
   }
 
   return (
-    <div className="mx-auto w-9/12 my-12">
+    <div className="mx-auto w-11/12 sm:w-9/12 my-12">
       <Headlines
         heading={"Popular Courses"}
         subHeading={"Top-rated courses based on enrollments"}

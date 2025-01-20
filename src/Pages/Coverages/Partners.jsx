@@ -16,27 +16,27 @@ const Partners = () => {
             <Headlines heading={"Our Partners"} subHeading={"Trusted by over 15,000 companies and millions of learners around the world"} ></Headlines>
 
 
-        <div className="card bg-base-100 w-8/12  rounded-2xl shadow-lg mx-auto ">
+        <div className="card bg-base-100 w-11/12 sm:w-8/12  rounded-2xl shadow-lg mx-auto ">
 
         <div className='flex flex-row justify-around p-6 py-10'>
-          <img src={logo1} alt="Partner 1" className="w-24 h-2w-24 object-contain "/>
+          <img src={logo1} alt="Partner 1" className="w-8 sm:w-24 sm:h-24 mx-auto object-contain "/>
           <h2 className='border-r-2'></h2>
-          <img src={logo2} alt="Partner 2" className="w-24 h-2w-24 object-contain "/>
-          <h2 className='border-r-2'></h2>
-
-          <img src={logo3} alt="Partner 3" className="w-24 h-2w-24 object-contain "/>
+          <img src={logo2} alt="Partner 2" className="w-8 sm:w-24 sm:h-24 mx-auto object-contain "/>
           <h2 className='border-r-2'></h2>
 
-          <img src={logo4} alt="Partner 4" className="w-24 h-2w-24 object-contain "/>
+          <img src={logo3} alt="Partner 3" className="w-8 sm:w-24 sm:h-24 mx-auto object-contain "/>
           <h2 className='border-r-2'></h2>
 
-          <img src={logo5} alt="Partner 5" className="w-24 h-2w-24 object-contain "/>
+          <img src={logo4} alt="Partner 4" className="w-8 sm:w-24 sm:h-24 mx-auto object-contain "/>
           <h2 className='border-r-2'></h2>
 
-          <img src={logo6} alt="Partner 6" className="w-24 h-2w-24 object-contain "/>
+          <img src={logo5} alt="Partner 5" className="w-8 sm:w-24 sm:h-24 mx-auto object-contain "/>
           <h2 className='border-r-2'></h2>
 
-          <img src={logo7} alt="Partner 7" className="w-24 h-2w-24 object-contain "/>
+          <img src={logo6} alt="Partner 6" className="w-8 sm:w-24 sm:h-24 mx-auto object-contain "/>
+          <h2 className='border-r-2'></h2>
+
+          <img src={logo7} alt="Partner 7" className="w-8 sm:w-24 sm:h-24 mx-auto object-contain "/>
         </div>
 
 
