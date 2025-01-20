@@ -87,7 +87,7 @@ const EnrolledClassDetails = () => {
 
   return (
     <div className="p-6">
-      <h2 className="text-2xl font-semibold mb-4">Enrolled Class Details</h2>
+      <h2 className="text-2xl text-center font-semibold mb-4 ">Enrolled Class Details</h2>
 
       <table className="w-full border-collapse border border-gray-300">
         <thead>
@@ -142,7 +142,7 @@ const EnrolledClassDetails = () => {
           onClick={() => setModalOpen(false)}
         >
           <div
-            className="bg-white p-6 rounded shadow-md w-1/3"
+            className="bg-white  p-6 rounded-2xl shadow-md w-1/3"
             onClick={(e) => e.stopPropagation()}
           >
             <h2 className="text-xl font-semibold mb-4">Teaching Evaluation Report</h2>
