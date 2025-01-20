@@ -20,6 +20,7 @@ import SeeDetails from "../TeacherDashboard/SeeDetails";
 import ClassReview from "../Admin_Dashboard/ClassReview";
 import PaymentSuccess from "../Payment/PaymentSuccess";
 import EnrolledClassDetails from "../Student_Dashboard/EnrolledClassDetails";
+import PrivateRoute from "./PrivateRoute";
 
 export const router = createBrowserRouter([
   {
@@ -34,16 +35,16 @@ export const router = createBrowserRouter([
          element: <AllClasses /> 
         }, 
       { path: "/class/:id",
-         element: <ClassDetails /> 
+         element: <PrivateRoute><ClassDetails />  </PrivateRoute> 
         }, 
       { path: "/payment/:id",
-         element: <Payment /> 
+         element:<PrivateRoute> <Payment /> </PrivateRoute>
         }, 
       { path: "/payment-success/:paymentId",
-         element: <PaymentSuccess /> 
+         element:<PrivateRoute> <PaymentSuccess /> </PrivateRoute> 
         }, 
       { path: "/teach",
-         element: <TeachOnEducator /> 
+         element:<PrivateRoute> <TeachOnEducator /> </PrivateRoute> 
         }, 
       { path: "/signin",
          element: <SignIn /> 
