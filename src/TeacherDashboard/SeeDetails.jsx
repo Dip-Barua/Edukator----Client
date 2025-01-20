@@ -110,7 +110,7 @@ const SeeDetails = () => {
       {loading ? (
         <CircularProgress />
       ) : classData ? (
-        <div>
+        <div className=''>
           <Typography variant="h4" gutterBottom>
             Class Details: {classData.title}
           </Typography>
