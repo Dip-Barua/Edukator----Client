@@ -18,6 +18,8 @@ import AddClass from "../TeacherDashboard/AddClass";
 import MyClass from "../TeacherDashboard/MyClass";
 import SeeDetails from "../TeacherDashboard/SeeDetails";
 import ClassReview from "../Admin_Dashboard/ClassReview";
+import PaymentSuccess from "../Payment/PaymentSuccess";
+import EnrolledClassDetails from "../Student_Dashboard/EnrolledClassDetails";
 
 export const router = createBrowserRouter([
   {
@@ -36,6 +38,9 @@ export const router = createBrowserRouter([
         }, 
       { path: "/payment/:id",
          element: <Payment /> 
+        }, 
+      { path: "/payment-success/:paymentId",
+         element: <PaymentSuccess /> 
         }, 
       { path: "/teach",
          element: <TeachOnEducator /> 
@@ -61,6 +66,10 @@ export const router = createBrowserRouter([
     {
       path: "enrolled-classes",
       element: <EnrolledClass/>,
+    },
+    {
+      path: "myenroll-class/:id",
+      element: <EnrolledClassDetails/>,
     },
   ]}
   ,{
