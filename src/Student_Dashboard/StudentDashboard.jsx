@@ -2,7 +2,6 @@ import React from 'react';
 import { Outlet, Link } from 'react-router-dom';
 import Headlines from './../Pages/Shared/Headlines/Headlines';
 import logo from '../assets/Logo/header-logo.png'
-import Footer from '../Pages/Shared/Footer/Footer';
 
 const StudentDashboard = () => {
     return (
@@ -22,7 +21,7 @@ const StudentDashboard = () => {
                         <Link to="/student-dashboard/enrolled-classes" className="text-lg text-white font-bold">My Enrolled Classes</Link>
                     </li>
                     <li>
-                        <Link to="/student-dashboard/my-progress" className="text-lg text-white font-bold">My Progress</Link>
+                        <Link to="#" className="text-lg text-white font-bold">My Progress</Link>
                     </li>
                     <hr />
                     <li>
