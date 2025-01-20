@@ -4,6 +4,8 @@
 Edukator is a MERN-stack-based platform designed to revolutionize the way educational institutions, tutors, and students interact. By providing a user-friendly interface and robust functionalities, Edukator aims to make skill learning and class management more efficient and accessible.
 
 
+![image](https://github.com/user-attachments/assets/3927aaa3-a7ed-439a-9f1b-eb93d7c207be)
+
 ---
 
 ## Technologies Used
