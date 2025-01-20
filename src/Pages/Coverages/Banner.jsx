@@ -40,7 +40,7 @@ const Banner = () => {
         </h2>
       </div>
       <div className="w-8/12  mx-auto gap-5 text-center mt-6"> 
-        <button className="p-2 rounded-xl hover:bg-white hover:text-black bg-orange-400 text-white text-xl w-2/12 mr-4">Explore Courses</button>
+        <button className="p-2 rounded-xl hover:bg-white hover:text-black bg-orange-400 text-white text-xl w-2/12 mr-4">Explore </button>
         <button className="p-2 rounded-xl hover:bg-white hover:text-black bg-orange-400 text-white text-xl w-2/12 ">Join Now</button>
       </div>
     </div>

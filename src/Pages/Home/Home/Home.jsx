@@ -4,12 +4,14 @@ import Partners from '../../Coverages/Partners';
 import Becomeinstructor from '../../Coverages/Becomeinstructor';
 import Growth from '../../Coverages/Growth';
 import Faq from '../../Coverages/Faq';
+import Feedback from '../../Coverages/Feedback';
 
 const Home = () => {
     return (
         <div>
             <Banner></Banner>    
             <Partners></Partners>    
+            <Feedback></Feedback>
             <Growth></Growth>
             <Becomeinstructor></Becomeinstructor>   
             <Faq></Faq> 
