@@ -36,6 +36,7 @@ const Footer = () => {
     <a className="link link-hover">Cookie policy</a>
   </nav>
 </footer>
+<p className='font-semibold text-center'>All Right Reserved || by Dip</p>
         </div>
             
         </>

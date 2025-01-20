@@ -53,14 +53,14 @@ const Navbar = () => {
   };
 
   return (
-    <div className="bg-orange-400 fixed top-0 left-0 right-0 z-50 mx-auto w-full text-white shadow-md">
-      <div className="navbar w-10/12 mx-auto text-white">
+    <div className="bg-orange-400 fixed top-0 left-0 right-0 z-50 mx-auto w-full text-black sm:text-white shadow-md">
+      <div className="navbar w-10/12 mx-auto text-black sm:text-white">
         <div className="navbar-start">
           <div className="dropdown">
             <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5"
+                className="h-6 w-6 text-white "
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor">
@@ -73,7 +73,7 @@ const Navbar = () => {
             </div>
             <ul
               tabIndex={0}
-              className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow text-lg">
+              className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow text-xl">
               {navOptions}
               {renderDashboardLink()}
             </ul>
@@ -100,7 +100,7 @@ const Navbar = () => {
                   {renderDashboardLink()}
                   <li><NavLink to="/" onClick={handleLogout}>Logout</NavLink></li>
                 </ul>
-                <NavLink to="/" onClick={handleLogout} className="btn item hover:text-white hover:bg-transparent">Logout</NavLink>
+                <NavLink to="/" onClick={handleLogout} className="btn item hidden sm:block hover:text-white hover:bg-transparent">Logout</NavLink>
 
               </div>
             </>
