@@ -54,18 +54,18 @@ const ClassDetails = () => {
   };
 
   return (
-    <div className="w-6/12 mx-auto my-12">
-      <div className="card bg-base-100 shadow-xl p-6 gap-5 flex flex-row">
-        <div className="w-5/12">
+    <div className=" w-10/12 sm:w-6/12 mx-auto my-12">
+      <div className="card bg-base-100 shadow-xl p-6 gap-5 flex flex-col sm:flex-row">
+        <div className=" w-full sm:w-5/12">
           <img
             src={classItem.image}
             alt={classItem.title}
-            className="w-full h-80 object-cover mb-6 rounded-lg"
+            className="w-full h-40 sm:h-80 object-cover mb-6 rounded-lg"
           />
         </div>
 
         <div>
-          <h2 className="text-3xl font-bold mb-2">{classItem.title}</h2>
+          <h2 className="text-xl sm:text-3xl font-bold mb-2">{classItem.title}</h2>
           <p className="text-gray-500 text-lg mb-4">By {classItem.instructor}</p>
           <p className="text-xl font-bold text-green-600 mb-4">{classItem.price} $</p>
           <p className="text-gray-700 mb-4">{classItem.shortDescription}</p>

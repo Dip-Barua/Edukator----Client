@@ -100,7 +100,7 @@ const Navbar = () => {
                   {renderDashboardLink()}
                   <li><NavLink to="/" onClick={handleLogout}>Logout</NavLink></li>
                 </ul>
-                <NavLink to="/" onClick={handleLogout} className="btn item hidden sm:block hover:text-white hover:bg-transparent">Logout</NavLink>
+                <NavLink to="/" onClick={handleLogout} className="btn item hidden sm:flex text-white hover:text-black bg-transparent">Logout</NavLink>
 
               </div>
             </>
