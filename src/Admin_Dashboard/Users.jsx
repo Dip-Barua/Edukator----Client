@@ -1,19 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css'; 
+import 'react-toastify/dist/ReactToastify.css';
 
 const Users = () => {
   const [users, setUsers] = useState([]);
   const [search, setSearch] = useState('');
   const [loading, setLoading] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1); s
+  const [usersPerPage] = useState(5); 
 
   useEffect(() => {
     const fetchUsers = async () => {
       setLoading(true);
       try {
         const response = await axios.get('http://localhost:5000/api/users', {
-          params: { search }, 
+          params: { search },
         });
         setUsers(response.data.users);
       } catch (error) {
@@ -25,12 +27,12 @@ const Users = () => {
     };
 
     fetchUsers();
-  }, [search]); 
+  }, [search]);
 
   const makeAdmin = async (email) => {
     try {
       const response = await axios.put('http://localhost:5000/api/users/make-admin', { email });
-      toast.success(response.data.message); 
+      toast.success(response.data.message);
       setUsers((prevUsers) =>
         prevUsers.map((user) =>
           user.email === email ? { ...user, role: 'admin' } : user
@@ -38,14 +40,14 @@ const Users = () => {
       );
     } catch (error) {
       console.error('Error making user admin:', error);
-      toast.error('Failed to make user admin'); 
+      toast.error('Failed to make user admin');
     }
   };
 
   const removeAdmin = async (email) => {
     try {
       const response = await axios.put('http://localhost:5000/api/users/remove-admin', { email });
-      toast.success(response.data.message); 
+      toast.success(response.data.message);
       setUsers((prevUsers) =>
         prevUsers.map((user) =>
           user.email === email ? { ...user, role: 'student' } : user
@@ -61,9 +63,19 @@ const Users = () => {
     setSearch(event.target.value);
   };
 
+  const indexOfLastUser = currentPage * usersPerPage;
+  const indexOfFirstUser = indexOfLastUser - usersPerPage;
+  const currentUsers = users.slice(indexOfFirstUser, indexOfLastUser);
+
+  const totalPages = Math.ceil(users.length / usersPerPage);
+
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
+
   return (
     <div className="container mx-auto p-4">
-      <h1 className="text-2xl font-bold text-center mb-4">Users : {users.length}s</h1>
+      <h1 className="text-2xl font-bold text-center mb-4">Users : {users.length}</h1>
       <div className="mb-4">
         <input
           type="text"
@@ -88,7 +100,7 @@ const Users = () => {
             </tr>
           </thead>
           <tbody>
-            {users.map((user) => (
+            {currentUsers.map((user) => (
               <tr key={user._id}>
                 <td className="border p-2">{user.name}</td>
                 <td className="border p-2">{user.email}</td>
@@ -127,6 +139,22 @@ const Users = () => {
             ))}
           </tbody>
         </table>
+      )}
+
+      {totalPages > 1 && (
+        <div className="flex justify-center mt-6 space-x-2">
+          {Array.from({ length: totalPages }, (_, index) => (
+            <button
+              key={index + 1}
+              onClick={() => handlePageChange(index + 1)}
+              className={`px-4 py-2 rounded ${
+                currentPage === index + 1 ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'
+              }`}
+            >
+              {index + 1}
+            </button>
+          ))}
+        </div>
       )}
 
       <ToastContainer />
