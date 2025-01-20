@@ -1,56 +1,58 @@
-import React from 'react';
-import axios from 'axios';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import React, { useState } from "react";
+import axios from "axios";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 
 const TeacherRequest = () => {
   const queryClient = useQueryClient();
+  const [currentPage, setCurrentPage] = useState(1); 
+  const itemsPerPage = 6; 
 
   const { data, error, isLoading } = useQuery({
-    queryKey: ['teacher-request'],
+    queryKey: ["teacher-request"],
     queryFn: async () => {
-      const response = await axios.get('http://localhost:5000/api/teacher-request');
-      return response.data; 
+      const response = await axios.get("http://localhost:5000/api/teacher-request");
+      return response.data;
     },
   });
 
   const handleApprove = async (requestId, userEmail) => {
     try {
       const updatedRequests = data.map((request) =>
-        request._id === requestId ? { ...request, status: 'accepted' } : request
+        request._id === requestId ? { ...request, status: "accepted" } : request
       );
-      queryClient.setQueryData(['teacher-request'], updatedRequests); 
+      queryClient.setQueryData(["teacher-request"], updatedRequests);
 
       await axios.put(`http://localhost:5000/api/teacher-request/${requestId}`, {
-        status: 'accepted',
+        status: "accepted",
       });
 
       await axios.put(`http://localhost:5000/api/users`, {
         email: userEmail,
-        role: 'teacher',
+        role: "teacher",
       });
 
-      queryClient.invalidateQueries(['teacher-request']);
+      queryClient.invalidateQueries(["teacher-request"]);
     } catch (error) {
-      console.error('Error approving teacher request:', error);
-      queryClient.invalidateQueries(['teacher-request']);
+      console.error("Error approving teacher request:", error);
+      queryClient.invalidateQueries(["teacher-request"]);
     }
   };
 
   const handleReject = async (requestId) => {
     try {
       const updatedRequests = data.map((request) =>
-        request._id === requestId ? { ...request, status: 'rejected' } : request
+        request._id === requestId ? { ...request, status: "rejected" } : request
       );
-      queryClient.setQueryData(['teacher-request'], updatedRequests);
+      queryClient.setQueryData(["teacher-request"], updatedRequests);
 
       await axios.put(`http://localhost:5000/api/teacher-request/${requestId}`, {
-        status: 'rejected',
+        status: "rejected",
       });
 
-      queryClient.invalidateQueries(['teacher-request']);
+      queryClient.invalidateQueries(["teacher-request"]);
     } catch (error) {
-      console.error('Error rejecting teacher request:', error);
-      queryClient.invalidateQueries(['teacher-request']);
+      console.error("Error rejecting teacher request:", error);
+      queryClient.invalidateQueries(["teacher-request"]);
     }
   };
 
@@ -61,6 +63,14 @@ const TeacherRequest = () => {
   if (error) {
     return <div>Error loading teacher requests: {error.message}</div>;
   }
+
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const currentPageData = data.slice(startIndex, startIndex + itemsPerPage);
+  const totalPages = Math.ceil(data.length / itemsPerPage);
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
 
   return (
     <div className="container mx-auto p-4">
@@ -79,12 +89,12 @@ const TeacherRequest = () => {
           </tr>
         </thead>
         <tbody>
-          {data && data.map((request) => (
+          {currentPageData.map((request) => (
             <tr key={request._id}>
               <td className="border p-2">{request.name}</td>
               <td className="border p-2">
                 <img
-                  src={request.image || '/default-profile.png'}
+                  src={request.image || "/default-profile.png"}
                   alt={request.name}
                   className="w-16 h-16 rounded-full object-cover"
                 />
@@ -95,18 +105,18 @@ const TeacherRequest = () => {
               <td className="border p-2">
                 <span
                   className={`px-2 py-1 rounded-full ${
-                    request.status === 'pending'
-                      ? 'bg-yellow-500 text-white'
-                      : request.status === 'accepted'
-                      ? 'bg-green-500 text-white'
-                      : 'bg-red-500 text-white'
+                    request.status === "pending"
+                      ? "bg-yellow-500 text-white"
+                      : request.status === "accepted"
+                      ? "bg-green-500 text-white"
+                      : "bg-red-500 text-white"
                   }`}
                 >
                   {request.status}
                 </span>
               </td>
               <td className="border p-2">
-                {request.status === 'pending' && (
+                {request.status === "pending" && (
                   <>
                     <button
                       className="btn btn-success mr-2"
@@ -122,7 +132,7 @@ const TeacherRequest = () => {
                     </button>
                   </>
                 )}
-                {request.status === 'rejected' && (
+                {request.status === "rejected" && (
                   <button className="btn btn-danger" disabled>
                     Rejected
                   </button>
@@ -132,6 +142,20 @@ const TeacherRequest = () => {
           ))}
         </tbody>
       </table>
+
+      <div className="flex justify-center mt-4">
+        {Array.from({ length: totalPages }, (_, index) => index + 1).map((page) => (
+          <button
+            key={page}
+            className={`px-3 py-1 mx-1 border rounded ${
+              currentPage === page ? "bg-blue-500 text-white" : "bg-gray-200"
+            }`}
+            onClick={() => handlePageChange(page)}
+          >
+            {page}
+          </button>
+        ))}
+      </div>
     </div>
   );
 };
