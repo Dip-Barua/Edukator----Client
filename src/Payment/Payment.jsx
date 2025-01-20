@@ -14,7 +14,7 @@ const Payment = () => {
 
   useEffect(() => {
     if (price && user?.email) { 
-      fetch("http://localhost:5000/create-payment-intent", {
+      fetch("https://edukator-server.vercel.app/create-payment-intent", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

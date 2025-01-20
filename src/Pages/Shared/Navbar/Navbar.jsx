@@ -11,7 +11,7 @@ const Navbar = () => {
   useEffect(() => {
     if (user) {
       axios
-        .get(`http://localhost:5000/api/users?email=${user.email}`) 
+        .get(`https://edukator-server.vercel.app/api/users?email=${user.email}`) 
         .then((response) => {
           if (response.data.success && response.data.user) {
             setRole(response.data.user.role);

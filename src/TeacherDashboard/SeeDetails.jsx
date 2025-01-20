@@ -22,7 +22,7 @@ const SeeDetails = () => {
   useEffect(() => {
     const fetchClassData = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/classes/${id}`);
+        const response = await axios.get(`https://edukator-server.vercel.app/classes/${id}`);
         setClassData(response.data);
         setLoading(false); 
       } catch (error) {
@@ -38,7 +38,7 @@ const SeeDetails = () => {
   useEffect(() => {
     const fetchAssignments = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/assignments?classId=${id}`);
+        const response = await axios.get(`https://edukator-server.vercel.app/assignments?classId=${id}`);
         setAssignments(Array.isArray(response.data) ? response.data : []);
       } catch (error) {
         console.error('Error fetching assignments:', error);
@@ -56,7 +56,7 @@ const SeeDetails = () => {
   useEffect(() => {
     const fetchEnrollmentCount = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/enrollments/count/${id}`);
+        const response = await axios.get(`https://edukator-server.vercel.app/enrollments/count/${id}`);
         setEnrollmentCount(response.data.count || 0);  // Set enrollment count
       } catch (error) {
         console.error('Error fetching enrollment count:', error);
@@ -77,7 +77,7 @@ const SeeDetails = () => {
     }
   
     try {
-      const response = await axios.post('http://localhost:5000/assignments', {
+      const response = await axios.post('https://edukator-server.vercel.app/assignments', {
         title: newAssignment.title,
         deadline: newAssignment.deadline,
         description: newAssignment.description,

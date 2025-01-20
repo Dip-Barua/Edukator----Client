@@ -13,7 +13,7 @@ const ClassReview = () => {
   useEffect(() => {
     const fetchClasses = async () => {
       try {
-        const response = await fetch("http://localhost:5000/classes");
+        const response = await fetch("https://edukator-server.vercel.app/classes");
         if (!response.ok) {
           throw new Error("Failed to fetch classes");
         }
@@ -30,7 +30,7 @@ const ClassReview = () => {
 
   const handleApprove = async (classId) => {
     try {
-      const response = await fetch(`http://localhost:5000/classes/${classId}`, {
+      const response = await fetch(`https://edukator-server.vercel.app/classes/${classId}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -58,7 +58,7 @@ const ClassReview = () => {
 
   const handleReject = async (classId) => {
     try {
-      const response = await fetch(`http://localhost:5000/classes/${classId}`, {
+      const response = await fetch(`https://edukator-server.vercel.app/classes/${classId}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

@@ -42,7 +42,7 @@ const MyClass = () => {
 
     const fetchClasses = async () => {
       try {
-        const response = await fetch(`http://localhost:5000/classes?email=${user.email}`);
+        const response = await fetch(`https://edukator-server.vercel.app/classes?email=${user.email}`);
         if (!response.ok) {
           throw new Error("Failed to fetch classes data");
         }
@@ -71,7 +71,7 @@ const MyClass = () => {
 
   const handleDelete = async (classId) => {
     try {
-      const response = await fetch(`http://localhost:5000/classes/${classId}`, {
+      const response = await fetch(`https://edukator-server.vercel.app/classes/${classId}`, {
         method: "DELETE",
       });
       if (!response.ok) {
@@ -101,7 +101,7 @@ const MyClass = () => {
     }
 
     try {
-      const response = await fetch(`http://localhost:5000/classes/${currentClass._id}`, {
+      const response = await fetch(`https://edukator-server.vercel.app/classes/${currentClass._id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

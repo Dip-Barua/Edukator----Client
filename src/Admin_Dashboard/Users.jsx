@@ -14,7 +14,7 @@ const Users = () => {
     const fetchUsers = async () => {
       setLoading(true);
       try {
-        const response = await axios.get('http://localhost:5000/api/users', {
+        const response = await axios.get('https://edukator-server.vercel.app/api/users', {
           params: { search },
         });
         setUsers(response.data.users);
@@ -31,7 +31,7 @@ const Users = () => {
 
   const makeAdmin = async (email) => {
     try {
-      const response = await axios.put('http://localhost:5000/api/users/make-admin', { email });
+      const response = await axios.put('https://edukator-server.vercel.app/api/users/make-admin', { email });
       toast.success(response.data.message);
       setUsers((prevUsers) =>
         prevUsers.map((user) =>
@@ -46,7 +46,7 @@ const Users = () => {
 
   const removeAdmin = async (email) => {
     try {
-      const response = await axios.put('http://localhost:5000/api/users/remove-admin', { email });
+      const response = await axios.put('https://edukator-server.vercel.app/api/users/remove-admin', { email });
       toast.success(response.data.message);
       setUsers((prevUsers) =>
         prevUsers.map((user) =>

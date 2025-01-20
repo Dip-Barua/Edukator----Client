@@ -36,13 +36,13 @@ const AuthProvider = ({ children }) => {
           });
 
           axios
-            .get("http://localhost:5000/api/users/${newUser.uid}")
+            .get("https://edukator-server.vercel.app/api/users/${newUser.uid}")
             .then((response) => {
               console.log("User already exists:", response.data);
             })
             .catch(() => {
               axios
-                .post("http://localhost:5000/api/users", {
+                .post("https://edukator-server.vercel.app/api/users", {
                   email: newUser.email,
                   name: newUser.displayName,
                   photoURL: newUser.photoURL,
@@ -70,13 +70,13 @@ const AuthProvider = ({ children }) => {
         const user = result.user;
 
         axios
-          .get("http://localhost:5000/api/users/${user.uid}")
+          .get("https://edukator-server.vercel.app/api/users/${user.uid}")
           .then((response) => {
             console.log("User already exists:", response.data);
           })
           .catch(() => {
             axios
-              .post("http://localhost:5000/api/users", {
+              .post("https://edukator-server.vercel.app/api/users", {
                 email: user.email,
                 name: user.displayName,
                 photoURL: user.photoURL,
@@ -138,7 +138,7 @@ const AuthProvider = ({ children }) => {
 if(currentUser?.email){
   const user = { email: currentUser.email };
 
-  axios.post('http://localhost:5000/jwt', user, {
+  axios.post('https://edukator-server.vercel.app/jwt', user, {
     withCredentials: true,
   })
   .then(res => {
@@ -151,7 +151,7 @@ if(currentUser?.email){
     setLoading(false);
   });
 }else{
-  axios.post('http://localhost:5000/logout', {}, {
+  axios.post('https://edukator-server.vercel.app/logout', {}, {
     withCredentials: true,
   })
   .then(res => {

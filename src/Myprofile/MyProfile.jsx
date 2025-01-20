@@ -20,7 +20,7 @@ const MyProfile = () => {
   useEffect(() => {
     if (user) {
       axios
-        .get(`http://localhost:5000/api/users?email=${user.email}`)
+        .get(`https://edukator-server.vercel.app/api/users?email=${user.email}`)
         .then((response) => {
           const userData = response.data.user;
           setName(userData.name || "");
@@ -38,7 +38,7 @@ const MyProfile = () => {
 
   const updateUserProfile = (name, photoURL, phone, role) => {
     return axios
-      .put(`http://localhost:5000/api/users?email=${user.email}`, { name, photoURL, phone, role }) 
+      .put(`https://edukator-server.vercel.app/api/users?email=${user.email}`, { name, photoURL, phone, role }) 
       .then((response) => {
         console.log("Profile updated:", response.data);
       })

@@ -18,7 +18,7 @@ const EnrolledClass = () => {
       }
 
       try {
-        const response = await axios.get(`http://localhost:5000/enrollments/${user.email}`);
+        const response = await axios.get(`https://edukator-server.vercel.app/enrollments/${user.email}`);
         setEnrolledClasses(response.data);
       } catch (error) {
         console.error("Error fetching enrolled classes:", error);

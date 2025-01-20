@@ -41,7 +41,7 @@ const CheckOutForm = ({ clientSecret, classId, userId }) => {
       if (error) {
         setError(error.message);
       } else if (paymentIntent.status === "succeeded") {
-        await fetch("http://localhost:5000/payment-success", {
+        await fetch("https://edukator-server.vercel.app/payment-success", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({

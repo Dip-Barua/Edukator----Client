@@ -17,7 +17,7 @@ const EnrolledClassDetails = () => {
   useEffect(() => {
     const fetchAssignments = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/assignments/${id}`);
+        const response = await axios.get(`https://edukator-server.vercel.app/assignments/${id}`);
         setAssignments(response.data);
       } catch (error) {
         console.error("Error fetching assignments:", error);
@@ -43,7 +43,7 @@ const EnrolledClassDetails = () => {
     }
 
     try {
-      const response = await axios.post("http://localhost:5000/submit-assignment", {
+      const response = await axios.post("https://edukator-server.vercel.app/submit-assignment", {
         assignmentId,
         userEmail: user?.email,
         submissionText, 
@@ -68,7 +68,7 @@ const EnrolledClassDetails = () => {
 
   const handleSubmitFeedback = async () => {
     try {
-      const response = await axios.post("http://localhost:5000/submit-feedback", {
+      const response = await axios.post("https://edukator-server.vercel.app/submit-feedback", {
         classId: id,
         userEmail: user?.email,
         rating,

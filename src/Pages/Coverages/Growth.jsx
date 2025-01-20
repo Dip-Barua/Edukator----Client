@@ -11,15 +11,15 @@ const Growth = () => {
   useEffect(() => {
     const fetchCounts = async () => {
       try {
-        const userResponse = await fetch("http://localhost:5000/api/users");
+        const userResponse = await fetch("https://edukator-server.vercel.app/api/users");
         const userData = await userResponse.json();
         setUserCount(userData.users.length);
 
-        const classResponse = await fetch("http://localhost:5000/classes/");
+        const classResponse = await fetch("https://edukator-server.vercel.app/classes/");
         const classData = await classResponse.json();
         setClassCount(classData.length);
 
-        const enrollmentResponse = await fetch("http://localhost:5000/enrollments");
+        const enrollmentResponse = await fetch("https://edukator-server.vercel.app/enrollments");
         const enrollmentData = await enrollmentResponse.json();
         setEnrollmentCount(enrollmentData.count);
       } catch (error) {

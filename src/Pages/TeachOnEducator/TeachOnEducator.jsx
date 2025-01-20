@@ -23,12 +23,12 @@ const TeachOnEducator = () => {
     "Cybersecurity",
   ];
 
-  axios.defaults.baseURL = "http://localhost:5000";
+  axios.defaults.baseURL = "https://edukator-server.vercel.app";
 
   useEffect(() => {
     if (user) {
       axios
-        .get(`http://localhost:5000/api/users?email=${user.email}`)
+        .get(`https://edukator-server.vercel.app/api/users?email=${user.email}`)
         .then((response) => {
           setProfile(response.data.user);
           setLoading(false); 

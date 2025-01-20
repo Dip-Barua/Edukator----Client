@@ -11,7 +11,7 @@ const AllClasses = () => {
   useEffect(() => {
     const fetchClasses = async () => {
       try {
-        const response = await fetch("http://localhost:5000/classes");
+        const response = await fetch("https://edukator-server.vercel.app/classes");
         if (!response.ok) {
           throw new Error("Failed to fetch classes data");
         }
@@ -31,7 +31,7 @@ const AllClasses = () => {
     for (const classItem of classes) {
       try {
         const response = await fetch(
-          `http://localhost:5000/enrollments/count/${classItem._id}`
+          `https://edukator-server.vercel.app/enrollments/count/${classItem._id}`
         );
         if (!response.ok) {
           throw new Error("Failed to fetch enrollment count");

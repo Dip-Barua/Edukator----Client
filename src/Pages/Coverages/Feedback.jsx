@@ -12,7 +12,7 @@ const Feedback = () => {
   useEffect(() => {
     const fetchFeedback = async () => {
       try {
-        const response = await fetch("http://localhost:5000/feedback");
+        const response = await fetch("https://edukator-server.vercel.app/feedback");
         if (!response.ok) {
           throw new Error("Failed to fetch feedback");
         }

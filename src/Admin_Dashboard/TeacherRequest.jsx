@@ -10,7 +10,7 @@ const TeacherRequest = () => {
   const { data, error, isLoading } = useQuery({
     queryKey: ["teacher-request"],
     queryFn: async () => {
-      const response = await axios.get("http://localhost:5000/api/teacher-request");
+      const response = await axios.get("https://edukator-server.vercel.app/api/teacher-request");
       return response.data;
     },
   });
@@ -22,11 +22,11 @@ const TeacherRequest = () => {
       );
       queryClient.setQueryData(["teacher-request"], updatedRequests);
 
-      await axios.put(`http://localhost:5000/api/teacher-request/${requestId}`, {
+      await axios.put(`https://edukator-server.vercel.app/api/teacher-request/${requestId}`, {
         status: "accepted",
       });
 
-      await axios.put(`http://localhost:5000/api/users`, {
+      await axios.put(`https://edukator-server.vercel.app/api/users`, {
         email: userEmail,
         role: "teacher",
       });
@@ -45,7 +45,7 @@ const TeacherRequest = () => {
       );
       queryClient.setQueryData(["teacher-request"], updatedRequests);
 
-      await axios.put(`http://localhost:5000/api/teacher-request/${requestId}`, {
+      await axios.put(`https://edukator-server.vercel.app/api/teacher-request/${requestId}`, {
         status: "rejected",
       });
 

@@ -51,7 +51,7 @@ const AddClass = () => {
     };
   
     try {
-      const response = await axios.post('http://localhost:5000/classes', classData, {
+      const response = await axios.post('https://edukator-server.vercel.app/classes', classData, {
         headers: {
           'Content-Type': 'application/json',
         },

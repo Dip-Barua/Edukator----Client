@@ -12,13 +12,13 @@ const ClassDetails = () => {
   useEffect(() => {
     const fetchClassData = async () => {
       try {
-        const classResponse = await fetch(`http://localhost:5000/classes/${id}`);
+        const classResponse = await fetch(`https://edukator-server.vercel.app/classes/${id}`);
         if (!classResponse.ok) {
           throw new Error("Class not found");
         }
         const classData = await classResponse.json();
         setClassItem(classData);
-        const enrollmentResponse = await fetch(`http://localhost:5000/enrollments/count/${id}`);
+        const enrollmentResponse = await fetch(`https://edukator-server.vercel.app/enrollments/count/${id}`);
         if (!enrollmentResponse.ok) {
           throw new Error("Enrollment count not found");
         }
