@@ -10,6 +10,7 @@ const SeeDetails = () => {
   const navigate = useNavigate();
   const [classData, setClassData] = useState(null);
   const [assignments, setAssignments] = useState([]);
+  const [enrollmentCount, setEnrollmentCount] = useState(0);  // State for enrollment count
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [newAssignment, setNewAssignment] = useState({
     title: '',
@@ -48,6 +49,24 @@ const SeeDetails = () => {
 
     if (classData) {
       fetchAssignments();
+    }
+  }, [classData, id]);
+
+  // Fetch enrollment count after classData is set
+  useEffect(() => {
+    const fetchEnrollmentCount = async () => {
+      try {
+        const response = await axios.get(`http://localhost:5000/enrollments/count/${id}`);
+        setEnrollmentCount(response.data.count || 0);  // Set enrollment count
+      } catch (error) {
+        console.error('Error fetching enrollment count:', error);
+        toast.error('Error fetching enrollment count.');
+        setEnrollmentCount(0);  // Set default to 0 if there's an error
+      }
+    };
+
+    if (classData) {
+      fetchEnrollmentCount();
     }
   }, [classData, id]);
 
@@ -101,7 +120,7 @@ const SeeDetails = () => {
               <Card>
                 <CardContent>
                   <Typography variant="h6">Total Enrollments</Typography>
-                  <Typography variant="body1">{classData.totalEnrollments || 0}</Typography>
+                  <Typography variant="body1">{enrollmentCount}</Typography>  {/* Display enrollment count */}
                 </CardContent>
               </Card>
             </Grid>
@@ -122,15 +141,16 @@ const SeeDetails = () => {
               </Card>
             </Grid>
           </Grid>
-<div className='mt-10 mx-auto w-3/12'><Button
-            variant="contained"
-            color="primary"
-            onClick={handleOpenModal}
-            disabled={classData.status == 'rejected' }
-          >
-            Create Assignment
-          </Button></div>
-          
+          <div className='mt-10 mx-auto w-3/12'>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={handleOpenModal}
+              disabled={classData.status === 'rejected'}
+            >
+              Create Assignment
+            </Button>
+          </div>
 
           <Modal
             open={isModalOpen}
@@ -138,7 +158,7 @@ const SeeDetails = () => {
             aria-labelledby="assignment-modal-title"
             aria-describedby="assignment-modal-description"
           >
-            <div style={{ backgroundColor: 'white', }} className='w-4/12 mx-auto mt-20 p-6 rounded-xl'>
+            <div style={{ backgroundColor: 'white' }} className='w-4/12 mx-auto mt-20 p-6 rounded-xl'>
               <Typography variant="h6" id="assignment-modal-title">
                 Add New Assignment
               </Typography>
