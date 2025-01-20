@@ -134,6 +134,41 @@ const AuthProvider = ({ children }) => {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setLoading(true);
+
+      if (currentUser?.email) {
+        const user = { email: currentUser.email };
+
+        axios.post('https://study-together-server-one.vercel.app/jwt', user, {
+          withCredentials: true,
+        })
+        .then(res => {
+          console.log('JWT Token set:', res.data);
+          setUser(currentUser);
+          setLoading(false);
+        })
+        .catch(error => {
+          console.error('Error during JWT login:', error);
+          setLoading(false);
+        });
+
+      } else {
+        axios.post('https://study-together-server-one.vercel.app/logout', {}, {
+          withCredentials: true,
+        })
+        .then(res => {
+          console.log('Logged out:', res.data);
+          setUser(null);
+          setLoading(false);
+        })
+        .catch(error => {
+          console.error('Error during logout:', error);
+          setLoading(false);
+        });
+      }
+
+
+
+
       if (currentUser?.email) {
         setUser({
           uid: currentUser.uid, 
@@ -146,6 +181,10 @@ const AuthProvider = ({ children }) => {
         setUser(null);
         setLoading(false);
       }
+
+
+
+
     });
     return () => {
       unsubscribe();

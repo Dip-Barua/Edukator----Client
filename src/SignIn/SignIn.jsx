@@ -48,8 +48,6 @@ const SignIn = () => {
           setError("Invalid credentials. Please check your email and password.");
           toast.error("Invalid credentials. Please check your email and password.");
         } else {
-          setError("Something went wrong. Please try again.");
-          toast.error("Something went wrong. Please try again.");
         }
       });
   };
