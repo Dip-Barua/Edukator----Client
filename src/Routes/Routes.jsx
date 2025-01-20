@@ -92,6 +92,10 @@ export const router = createBrowserRouter([
       path: "class-review",
       element: <ClassReview></ClassReview>,
     },
+    {
+      path: "class-details/:id",
+      element: <SeeDetails/>,
+    },
   ]}
   ,{
   path: "teacher-dashboard",
