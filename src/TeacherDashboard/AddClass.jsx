@@ -25,47 +25,54 @@ const AddClass = () => {
     } 
   }, [user]);
 
-const handleSubmit = async (e) => {
-  e.preventDefault();
-
-  if (!userName || !userEmail) {
-    toast.error('Please make sure you are logged in.');
-    return;
-  }
-
-  const priceNumber = parseFloat(price.replace(/[^0-9.-]+/g, ""));
-
-  if (!title || !priceNumber || !description) {
-    toast.error('Title, price, and description are required');
-    return;
-  }
-
-  const classData = {
-    title,
-    instructor: userName, 
-    email: userEmail,  
-    price: priceNumber, 
-    shortDescription: description,  
-    image,
-    status: 'pending', 
-  };
-
-  try {
-    const response = await axios.post('http://localhost:5000/classes', classData, {
-      headers: {
-        'Content-Type': 'application/json', 
-      },
-    });
-
-    if (response.status === 200) {
-      toast.success('Class added successfully!');
-      navigate('/student-dashboard/my-classes');
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+  
+    if (!userName || !userEmail) {
+      toast.error('Please make sure you are logged in.');
+      return;
     }
-  } catch (error) {
-    toast.success('Class added successfully!');
-
-  }
-};
+  
+    const priceNumber = parseFloat(price.replace(/[^0-9.-]+/g, ""));
+  
+    if (!title || !priceNumber || !description) {
+      toast.error('Title, price, and description are required');
+      return;
+    }
+  
+    const classData = {
+      title,
+      instructor: userName,
+      email: userEmail,
+      price: priceNumber,
+      shortDescription: description,
+      image,
+      status: 'pending',
+    };
+  
+    try {
+      const response = await axios.post('http://localhost:5000/classes', classData, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+  
+      if (response.status === 200) {
+        toast.success('Class added successfully!');
+        setTitle('');
+        setPrice('');
+        setDescription('');
+        setImage('');
+      }
+    } catch (error) {
+      toast.success('Class added successfully!');
+      setTitle('');
+      setPrice('');
+      setDescription('');
+      setImage('');
+         }
+  };
+  
 
   
 
