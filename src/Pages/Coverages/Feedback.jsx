@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
+import { Rating } from "@mui/material"; 
 import Headlines from "../Shared/Headlines/Headlines";
 
 const Feedback = () => {
@@ -41,7 +42,7 @@ const Feedback = () => {
 
   return (
     <div className=" mx-auto my-12">
-        <Headlines heading={"User Feedback"} subHeading={"Feedback from Our Community"}></Headlines>
+      <Headlines heading={"User Feedback"} subHeading={"Feedback from Our Community"}></Headlines>
       <Carousel
         showThumbs={false}
         showStatus={false}
@@ -53,21 +54,28 @@ const Feedback = () => {
         {feedbacks.map((feedback) => (
           <div key={feedback._id} className="p-6 text-center">
             <div className="flex flex-col items-center">
-              
-              <div><img
-                src={feedback.userDetails?.photoURL || "https://via.placeholder.com/150"}
-                alt={feedback.userDetails?.name || feedback.userEmail}
-                className="w-16 h-16 rounded-full mb-4"
-              />
-                </div>
+              <div>
+                <img
+                  src={feedback.userDetails?.photoURL || "https://via.placeholder.com/150"}
+                  alt={feedback.userDetails?.name || feedback.userEmail}
+                  className="w-16 h-16 rounded-full mb-4"
+                />
+              </div>
               <h3 className="text-xl font-bold">
                 {feedback.userDetails?.name || "Unknown User"}
               </h3>
               <p className="text-sm text-gray-500 mb-2">{feedback.userEmail}</p>
               <p className="text-gray-700 italic">"{feedback.description}"</p>
-              <p className="text-yellow-500 mt-2">
-                {"⭐".repeat(parseInt(feedback.rating.$numberInt, 10))}
-              </p>
+              <Rating
+                name="read-only-rating"
+                value={feedback.rating} 
+                precision={0.5} 
+                readOnly 
+                sx={{
+                  marginTop: 1, 
+                  color: "gold", 
+                }}
+              />
             </div>
           </div>
         ))}
