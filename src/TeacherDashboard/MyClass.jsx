@@ -13,6 +13,7 @@ import {
   Modal,
   TextField,
   Box,
+  Pagination,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
@@ -28,7 +29,10 @@ const MyClass = () => {
     title: "",
     price: "",
     shortDescription: "",
-  }); 
+  });
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 5;
 
   useEffect(() => {
     if (!user) {
@@ -47,9 +51,9 @@ const MyClass = () => {
         if (Array.isArray(data)) {
           const filteredClasses = data.filter((classItem) => classItem.email === user.email);
           if (filteredClasses.length > 0) {
-            setClasses(filteredClasses); 
+            setClasses(filteredClasses);
           } else {
-            setClasses([]); 
+            setClasses([]);
             toast.info("No classes found.");
           }
         } else {
@@ -74,7 +78,7 @@ const MyClass = () => {
         throw new Error("Failed to delete class");
       }
       toast.success("Class deleted successfully.");
-      setClasses(classes.filter((classItem) => classItem._id !== classId)); 
+      setClasses(classes.filter((classItem) => classItem._id !== classId));
     } catch (error) {
       toast.error("Error deleting class.");
     }
@@ -95,7 +99,7 @@ const MyClass = () => {
       toast.error("All fields are required.");
       return;
     }
-  
+
     try {
       const response = await fetch(`http://localhost:5000/classes/${currentClass._id}`, {
         method: "PUT",
@@ -104,15 +108,15 @@ const MyClass = () => {
         },
         body: JSON.stringify(updatedClassData),
       });
-  
+
       if (!response.ok) {
         const errorText = await response.text();
         throw new Error(errorText);
       }
-  
+
       toast.success("Class updated successfully.");
       setOpen(false);
-  
+
       setClasses((prevClasses) =>
         prevClasses.map((classItem) =>
           classItem._id === currentClass._id ? { ...classItem, ...updatedClassData } : classItem
@@ -122,13 +126,18 @@ const MyClass = () => {
       toast.error(`Error updating class: ${error.message}`);
     }
   };
-  
-  
-  
 
   const handleDetails = (classId) => {
     navigate(`/teacher-dashboard/class-details/${classId}`);
   };
+
+  const handlePageChange = (event, value) => {
+    setCurrentPage(value);
+  };
+
+  const indexOfLastClass = currentPage * itemsPerPage;
+  const indexOfFirstClass = indexOfLastClass - itemsPerPage;
+  const currentClasses = classes.slice(indexOfFirstClass, indexOfLastClass);
 
   return (
     <div>
@@ -153,7 +162,7 @@ const MyClass = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {classes.map((classItem) => (
+              {currentClasses.map((classItem) => (
                 <TableRow key={classItem._id}>
                   <TableCell>{classItem.title}</TableCell>
                   <TableCell>{classItem.instructor}</TableCell>
@@ -166,7 +175,7 @@ const MyClass = () => {
                       variant="outlined"
                       onClick={() => handleDetails(classItem._id)}
                       style={{ marginRight: "8px" }}
-                                          >
+                    >
                       See Details
                     </Button>
                     <Button
@@ -174,8 +183,7 @@ const MyClass = () => {
                       color="primary"
                       onClick={() => handleUpdate(classItem)}
                       style={{ marginRight: "8px" }}
-                      disabled={classItem.status ===  "rejected"} 
-
+                      disabled={classItem.status === "rejected"}
                     >
                       Update
                     </Button>
@@ -194,10 +202,18 @@ const MyClass = () => {
         </TableContainer>
       )}
 
+      {/* Pagination */}
+      <Pagination
+        count={Math.ceil(classes.length / itemsPerPage)}
+        page={currentPage}
+        onChange={handlePageChange}
+        style={{ marginTop: "20px", display: "flex", justifyContent: "center" }}
+      />
+
       {/* Update Class Modal */}
       <Modal open={open} onClose={() => setOpen(false)}>
         <Box sx={{ backgroundColor: "white" }} className="mx-auto text-center w-4/12 p-5 mt-20 rounded-2xl">
-          <Typography variant="h6" className="font-bold" gutterBottom >
+          <Typography variant="h6" className="font-bold" gutterBottom>
             Update Class Details
           </Typography>
           <TextField
@@ -231,7 +247,7 @@ const MyClass = () => {
             color="primary"
             onClick={handleUpdateSubmit}
             style={{ marginTop: "16px" }}
-            className="rounded-xl "
+            className="rounded-xl"
           >
             Update Class
           </Button>
