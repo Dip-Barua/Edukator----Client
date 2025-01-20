@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useStripe, useElements, CardElement } from "@stripe/react-stripe-js";
 import { useNavigate } from "react-router-dom";
 
-const CheckOutForm = ({ clientSecret, classId }) => {
+const CheckOutForm = ({ clientSecret, classId, userId }) => {
   const stripe = useStripe();
   const elements = useElements();
   const navigate = useNavigate();
@@ -23,18 +23,24 @@ const CheckOutForm = ({ clientSecret, classId }) => {
       const { error, paymentIntent } = await stripe.confirmCardPayment(
         clientSecret,
         {
-          payment_method: {
-            card: cardElement,
-          },
+          payment_method: { card: cardElement },
         }
       );
 
       if (error) {
         setError(error.message);
       } else if (paymentIntent.status === "succeeded") {
-        navigate(`/payment-success/${paymentIntent.id}`, {
-          state: { classId, paymentIntent },
+        await fetch("http://localhost:5000/payment-success", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            paymentIntent,
+            userId,
+            classId,
+          }),
         });
+
+        navigate(`/student-dashboard/enrolled-classes`);
       }
     } catch (err) {
       setError("Payment failed. Please try again.");
